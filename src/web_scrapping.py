@@ -15,3 +15,5 @@ def createChromeDriver(num_chrome):
         driver = Driver(uc_cdp=True, incognito=True,block_images=True,headless=True)
         chrome_drivers.append(driver)
     return chrome_drivers
+
+print(createChromeDriver(5))
