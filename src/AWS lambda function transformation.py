@@ -17,7 +17,7 @@ def lambda_handler(event, context):
     bucket=event_params["s3"]["bucket"]["name"]
     key=event_params["s3"]["object"]["key"]
     
-    
+    print(bucket)
     s3_client = boto3.client('s3')
     response = s3_client.get_object(Bucket= bucket, Key= key)
     csv_bytes = response['Body'].read()
@@ -42,7 +42,7 @@ def lambda_handler(event, context):
         bedroom = str(int(row['bedroom_number'])) if pd.notnull(row['bedroom_number']) else '1'
         bathroom = str(int(row['bathroom_number'])) if pd.notnull(row['bathroom_number']) else '1'
         return bedroom + ' - ' + bathroom
-  
+    print('Transformation Started')
     print('change columns name')
     columns_name = ["area (sq ft)","price ($)","frontage","alley_length_to_house","house_direction","balcony_direction","floor_number","bedroom_number","bathroom_number",
     "legal_document","furnished","uploaded_date","expired_date","listing_article_tier","listing_id","full_address","latitude","longtitude","url"]
@@ -85,6 +85,7 @@ def lambda_handler(event, context):
     apt_listing['house_direction'] = apt_listing['house_direction'].map(translation_dict)
     apt_listing['balcony_direction'] = apt_listing['balcony_direction'].map(translation_dict)
     
+    print('Transformation ended')
     new_bucket = 'processed-apt-listing-data'
     new_key = 'processed/' + key  # Assuming you want to store processed files in 'processed/' prefix
     csv_buffer = io.StringIO()
