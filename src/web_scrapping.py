@@ -4,10 +4,15 @@ from seleniumbase import Driver
 from bs4 import BeautifulSoup
 from datetime import datetime
 from sys import path
+from concurrent.futures import ThreadPoolExecutor
+import os
 import pandas as pd
 import secrets
 import logging
 import re
+import boto3
+from sth import aws_access_key_id,aws_secret_access_key
+
 
 page_url= 'https://batdongsan.com.vn/cho-thue-can-ho-chung-cu-tp-hcm'
 
@@ -18,6 +23,13 @@ def createChromeDriver(num_chrome):
         driver = Driver(uc_cdp=True, incognito=True,block_images=True,headless=True)
         chrome_drivers.append(driver)
     return chrome_drivers
+
+def upload_to_S3(csv_file, s3_bucket_name):
+    s3 = boto3.client('s3',aws_access_key_id,aws_secret_access_key)
+    file_name = os.path.basename(csv_file)
+    # Upload file to S3 bucket
+    s3.upload_file(csv_file, s3_bucket_name, file_name)  
+    print(f"Uploaded {file_name} to S3 bucket: {s3_bucket_name}")
 
 #getting URLs for each listing in single page
 def extract_property_urls_single_page(page_url,html_content):
@@ -130,11 +142,11 @@ def process_single_page(page_url,chrome_driver,max_retry=1):
 def process_multiple_pages(number_of_page,url,number_of_chrome_driver):
 
   chrome_driver_lst= createChromeDriver(number_of_chrome_driver)
-  properties= []
-  for i in range(6,number_of_page+1):
-    #properties= []
-    page_url= url + '/p' + str(i)
-
+  
+  for i in range(15,number_of_page+1):
+    properties= []
+    page_url = f"{url}/p{i}"
+    
     print(f"Scraping data from {page_url}")
 
     chrome_driver= secrets.choice(chrome_driver_lst)
@@ -143,10 +155,15 @@ def process_multiple_pages(number_of_page,url,number_of_chrome_driver):
     for p in single_page_listing:
       properties.append(process_single_property(p,chrome_driver))
     apt_listing= pd.DataFrame(properties)
-    apt_listing.to_csv('apt_listing_page_' + str(i) + '.csv',index= False)
-  return properties
+    csv_file_path = f'apt_listing_page_{i}.csv'
+    apt_listing.to_csv(csv_file_path, index=False)
+     # Upload CSV file to S3 bucket
+    upload_to_S3(csv_file_path, 'apt-listing-data')
+    # Remove the local CSV file after uploading to S3
+    os.remove(csv_file_path)
+  print("All pages processed and CSV files uploaded to S3 successfully.")
     
 
 
 if __name__ == "__main__":
-    print(process_multiple_pages(6,page_url,5))
+    print(process_multiple_pages(15,page_url,5))

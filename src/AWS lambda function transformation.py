@@ -44,28 +44,28 @@ def lambda_handler(event, context):
         return bedroom + ' - ' + bathroom
     print('Transformation Started')
     print('change columns name')
-    columns_name = ["area (sq ft)","price ($)","frontage","alley_length_to_house","house_direction","balcony_direction","floor_number","bedroom_number","bathroom_number",
+    columns_name = ["area","price","frontage","alley_length_to_house","house_direction","balcony_direction","floor_number","bedroom_number","bathroom_number",
     "legal_document","furnished","uploaded_date","expired_date","listing_article_tier","listing_id","full_address","latitude","longtitude","url"]
     apt_listing.columns= columns_name
     
     print('drop unescessary columns')
     apt_listing.drop(["frontage","alley_length_to_house","floor_number","legal_document","listing_article_tier"],inplace=True, axis=1)
     
-    #print( 'Convert the date column to datetime format')
-    #apt_listing['uploaded_date'] = pd.to_datetime(apt_listing['uploaded_date'] , format='%d/%m/%Y')
-    #apt_listing['uploaded_date']  = apt_listing['uploaded_date'].dt.strftime('%m/%d/%Y')
-    #apt_listing['expired_date'] = pd.to_datetime(apt_listing['expired_date'] , format='%d/%m/%Y')
-    #apt_listing['expired_date']  = apt_listing['expired_date'].dt.strftime('%m/%d/%Y')
+    print( 'Convert the date column to datetime format')
+    apt_listing['uploaded_date'] = pd.to_datetime(apt_listing['uploaded_date'] , format='%d/%m/%Y')
+    apt_listing['uploaded_date']  = apt_listing['uploaded_date'].dt.strftime('%m/%d/%Y')
+    apt_listing['expired_date'] = pd.to_datetime(apt_listing['expired_date'] , format='%d/%m/%Y')
+    apt_listing['expired_date']  = apt_listing['expired_date'].dt.strftime('%m/%d/%Y')
     
     print('square meter to square feet')
-    apt_listing["area (sq ft)"] = np.round(pd.to_numeric(apt_listing["area (sq ft)"].str.split().str[0]) * 10.76, 2)
+    apt_listing["area"] = np.round(pd.to_numeric(apt_listing["area"].str.split().str[0]) * 10.76, 2)
     
     print('Vietnam Dong to USD')
     round_price = lambda x: np.round(pd.to_numeric(x.replace(',', '').split()[0]) * 1000000 / 24000, 2) if 'triệu/tháng' in x else None
-    apt_listing['price ($)'] = apt_listing['price ($)'].apply(round_price)
+    apt_listing['price'] = apt_listing['price'].apply(round_price)
     
     print('calculate price per sqft')
-    apt_listing['price_per_sqft'] = round(apt_listing['price ($)'] / apt_listing['area (sq ft)'], 2)
+    apt_listing['price_per_sqft'] = round(apt_listing['price'] / apt_listing['area'], 2)
     
     print('Furnished column')
     check_nan = lambda x: 'No' if x is None or x is np.nan else 'Yes'
@@ -87,7 +87,7 @@ def lambda_handler(event, context):
     
     print('Transformation ended')
     new_bucket = 'processed-apt-listing-data'
-    new_key = 'processed/' + key  # Assuming you want to store processed files in 'processed/' prefix
+    new_key = key 
     csv_buffer = io.StringIO()
     apt_listing.to_csv(csv_buffer, index=False)
     s3_client.put_object(Bucket=new_bucket, Key=new_key, Body=csv_buffer.getvalue())
