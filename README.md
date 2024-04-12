@@ -5,7 +5,7 @@
 - [Architecture](#architecture)
 - [Overview](#overview)
 - [ETL Flow](#etl-flow)
-- [Data Modeling and PowerBI Dashboard](#data-modeling-and-powerbi-dashboard)
+- [Tableau Dashboard](#tableau-dashboard)
 - [How to Run](#how-to-run)
   - [Set up the Crawler](#set-up-the-crawler)
   - [Create Azure Resources](#create-azure-resources)
