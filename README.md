@@ -38,8 +38,15 @@ The pipeline scrapes data from the Batdongsan website by PropertyGuru and consis
 
 ## ETL Flow
 
-This section outlines the ETL (Extract, Transform, Load) process in the project.
+- Execute the python file **web_scarpping.py** to start the pipeline
 
+- As each page is successfully scraped, **raw data** saved as a csv file and uploaded to a S3 bucket in AWS
+
+- AWS Lambda function is trigger by S3 events which raw data is then **transformed, deduplicated, and loaded** into a **cleaned S3 bucket** in AWS
+
+- AWS SQS is triggered by **cleaned S3 event** to load cleaned data into **Snowflake** using **Snowpipe**.
+  
+- Finally, use **Tableau** to directly load data from the Snowflake table and create a dashboard
 ## Tableau Dashboard
 
 This section discusses data modeling and the creation of the PowerBI dashboard.
