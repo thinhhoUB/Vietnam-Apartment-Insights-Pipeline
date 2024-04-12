@@ -29,7 +29,7 @@ This section provides an overview of how the project works and its main componen
 
 This section outlines the ETL (Extract, Transform, Load) process in the project.
 
-##Tableau Dashboard
+## Tableau Dashboard
 
 This section discusses data modeling and the creation of the PowerBI dashboard.
 
