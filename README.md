@@ -19,7 +19,31 @@ This section explains the problem statement and the objective of the project.
 
 ## Architecture
 
-This section describes the architecture of the project, including the technologies and tools used.
+The pipeline scrapes data from the Batdongsan website by PropertyGuru and consists of various modules and technologies:
+
+- **Scraping Data:**
+  - Python script is used to scrape data from the Batdongsan website.
+
+- **AWS S3:**
+  - Stores the scraped data.
+
+- **AWS Lambda:**
+  - Triggered by S3 events to transform the scraped data.
+
+- **Docker:**
+  - Containerizes the source code folder and deploys the image to AWS Lambda for auto-scaling data transformation.
+
+- **Cleaned Data:**
+  - Stored in another S3 bucket after transformation.
+
+- **AWS SQS:**
+  - Triggered by S3 events to load cleaned data into Snowflake using Snowpipe.
+
+- **Snowflake:**
+  - A cloud-based data warehousing platform used to store and analyze data.
+
+- **Data Visualization:**
+  - Comprehensive data visualization created from Snowflake data using a visualization tool.
 
 ## Overview
 
