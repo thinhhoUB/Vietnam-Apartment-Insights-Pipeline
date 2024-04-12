@@ -5,13 +5,7 @@
 - [Architecture](#architecture)
 - [ETL Flow](#etl-flow)
 - [Tableau Dashboard](#tableau-dashboard)
-- [How to Run](#how-to-run)
-  - [Set up the Crawler](#set-up-the-crawler)
-  - [Create Azure Resources](#create-azure-resources)
-  - [Set up ADLS Credentials](#set-up-adls-credentials)
-  - [Test and Debug our Data Pipeline](#test-and-debug-our-data-pipeline)
-  - [Deploy the Crawler in Azure Functions](#deploy-the-crawler-in-azure-functions)
-  - [Set up Databricks](#set-up-databricks)
+- 
 ## Problem and Objective
 
 This section explains the problem statement and the objective of the project.
@@ -38,43 +32,17 @@ The pipeline scrapes data from the Batdongsan website by PropertyGuru and consis
 
 ## ETL Flow
 
-- Execute the python file **web_scarpping.py** to start the pipeline
+- To initiate the pipeline, execute the Python file **web_scraping.py**.
 
-- As each page is successfully scraped, **raw data** saved as a csv file and uploaded to a S3 bucket in AWS
+- Upon successful scraping of each page, the raw data is serialized as a **CSV file** and subsequently uploaded to an **Amazon S3 bucket** within the AWS environment.
 
-- AWS Lambda function is trigger by S3 events which raw data is then **transformed, deduplicated, and loaded** into a **cleaned S3 bucket** in AWS
+- AWS Lambda functions are orchestrated to execute in response to S3 events, facilitating the transformation, deduplication, and loading of the raw data into a **cleaned S3 bucket** within the AWS ecosystem.
 
-- AWS SQS is triggered by **cleaned S3 event** to load cleaned data into **Snowflake** using **Snowpipe**.
+- Triggered by events from the cleaned S3 bucket, AWS SQS orchestrates the loading of cleaned data into **Snowflake utilizing Snowpipe**, ensuring efficient and reliable data ingestion into the Snowflake data warehousing platform.
   
-- Finally, use **Tableau** to directly load data from the Snowflake table and create a dashboard
+- Finally, for comprehensive data visualization and analysis, leverage **Tableau** to directly connect to the Snowflake table, enabling the creation of dynamic dashboards and insightful visualizations to drive actionable insights.
+- 
 ## Tableau Dashboard
 
 This section discusses data modeling and the creation of the PowerBI dashboard.
 
-## How to Run
-
-This section provides instructions on how to run the project on your local machine.
-
-### Set up the Crawler
-
-Instructions for setting up the web crawler.
-
-### Create Azure Resources
-
-Instructions for creating Azure resources.
-
-### Set up ADLS Credentials
-
-Instructions for setting up Azure Data Lake Storage credentials.
-
-### Test and Debug our Data Pipeline
-
-Instructions for testing and debugging the data pipeline.
-
-### Deploy the Crawler in Azure Functions
-
-Instructions for deploying the web crawler to Azure Functions.
-
-### Set up Databricks
-
-Instructions for setting up Databricks.
