@@ -20,7 +20,7 @@ This section explains the problem statement and the objective of the project.
 
 The pipeline scrapes data from the Batdongsan website by PropertyGuru and consists of various modules and technologies:
 
-- **Scraping Data:** Python script is used to scrape data from the Batdongsan website.
+- **Python Scraping Script:** is used to scrape data from the Batdongsan website.
 
 - **AWS S3:** Stores the scraped data.
 
