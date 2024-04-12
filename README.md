@@ -3,7 +3,6 @@
 ## Table of Contents
 - [Problem and Objective](#problem-and-objective)
 - [Architecture](#architecture)
-- [Overview](#overview)
 - [ETL Flow](#etl-flow)
 - [Tableau Dashboard](#tableau-dashboard)
 - [How to Run](#how-to-run)
@@ -36,10 +35,6 @@ The pipeline scrapes data from the Batdongsan website by PropertyGuru and consis
 - **Snowflake:** A cloud-based data warehousing platform used to store and analyze data.
 
 - **Data Visualization:** Comprehensive data visualization created from Snowflake data using Tableau.
-
-## Overview
-
-This section provides an overview of how the project works and its main components.
 
 ## ETL Flow
 
