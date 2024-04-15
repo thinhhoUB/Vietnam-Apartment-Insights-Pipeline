@@ -12,6 +12,8 @@ This section explains the problem statement and the objective of the project.
 
 ## Architecture
 
+<img width="1437" alt="Screen Shot 2024-04-15 at 3 29 19 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/dd9aceff-ec34-4edb-867f-e5e8aa839394">
+
 The pipeline scrapes data from the Batdongsan website by PropertyGuru and consists of various modules and technologies:
 
 - **Python Scraping Script:** is used to scrape data from the Batdongsan website.
