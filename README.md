@@ -33,16 +33,21 @@ The pipeline scrapes data from the Batdongsan website by PropertyGuru and consis
 ## ETL Flow
 
 - To initiate the pipeline, execute the Python file **web_scraping.py**.
+<img width="1160" alt="Screen Shot 2024-04-15 at 2 21 58 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/30c2766a-34b1-4456-ba2a-647a9595eaba">
 
 - Upon successful scraping of each page, the raw data is serialized as a **CSV file** and subsequently uploaded to an **Amazon S3 bucket** within the AWS environment.
+<img width="1281" alt="Screen Shot 2024-04-12 at 5 41 41 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/eaec8794-a2c3-4ef7-a30d-3276068301d0">
 
 - AWS Lambda functions are orchestrated to execute in response to S3 events, facilitating the transformation, deduplication, and loading of the raw data into a **cleaned S3 bucket** within the AWS ecosystem.
+<img width="1108" alt="Screen Shot 2024-04-12 at 5 42 10 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/cad0891a-2c1b-4b32-aad6-b781d189facd">
 
 - Triggered by events from the cleaned S3 bucket, AWS SQS orchestrates the loading of cleaned data into **Snowflake utilizing Snowpipe**, ensuring efficient and reliable data ingestion into the Snowflake data warehousing platform.
-  
+  <img width="1161" alt="Screen Shot 2024-04-12 at 5 41 29 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/55aa4f7a-758d-4ca4-9566-39b85b37f892">
+
 - Finally, for comprehensive data visualization and analysis, leverage **Tableau** to directly connect to the Snowflake table, enabling the creation of dynamic dashboards and insightful visualizations to drive actionable insights.
-- 
+
 ## Tableau Dashboard
 
-This section discusses data modeling and the creation of the PowerBI dashboard.
+<img width="1440" alt="Screen Shot 2024-04-15 at 2 16 23 PM" src="https://github.com/thinhhoUB/Vietnam-Apartment-Insights-Pipeline/assets/80074386/a75b90e8-6bb2-40ad-8f15-4737545e0062">
+
 
